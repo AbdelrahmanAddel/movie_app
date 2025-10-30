@@ -13,6 +13,8 @@ dependencies:
   pretty_dio_logger: 
   retrofit: 
   hive:
+  json_annotation:
+  hive_flutter: ^1.1.0
 
 
 

@@ -1,6 +1,6 @@
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/entities/user.dart';
-import '../models/user_model.dart';
+import '../models/movie_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   @override

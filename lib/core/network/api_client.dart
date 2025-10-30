@@ -1,35 +1,29 @@
-/// API client for HTTP requests
-/// Implement your HTTP client logic here
-class ApiClient {
-  final String baseUrl;
+import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-  ApiClient({required this.baseUrl});
+class DioClient {
+  DioClient._();
+  static late Dio? dio;
 
-  /// Perform GET request
-  Future<dynamic> get(String endpoint) async {
-    // Implement your GET request logic
-    // Example using http package:
-    // final response = await http.get(Uri.parse('baseUrl/endpoint'));
-    // return _handleResponse(response);
-    return {}; // Placeholder
-  }
-
-  /// Perform POST request
-  Future<dynamic> post(String endpoint, dynamic data) async {
-    // Implement your POST request logic
-    // Example using http package:
-    // final response = await http.post(
-    //   Uri.parse('baseUrl/endpoint'),
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: json.encode(data),
-    // );
-    // return _handleResponse(response);
-    return {}; // Placeholder
-  }
-
-  /// Handle HTTP response
-  dynamic _handleResponse(dynamic response) {
-    // Implement your response handling logic
-    return response;
+  static final Dio instance = getDio();
+  static Dio getDio() {
+    if (dio == null) {
+      dio = Dio();
+      dio!.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+        ),
+      );
+      dio!.options.connectTimeout = const Duration(seconds: 30);
+      dio!.options.receiveTimeout = const Duration(seconds: 30);
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 29184053a6041722076105d03b52dbef',
+      };
+    }
+    return dio!;
   }
 }
