@@ -93,7 +93,7 @@ class MovieCubit extends Cubit<MovieState> {
   void _setupConnectivityListener() {
     _subscription = networkInfo.isConnectionChanged.listen((isConnected) {
       if (isConnected && _wasOffline) {
-        getMovies();
+        getMovies(refresh: true);
       }
       _wasOffline = !isConnected;
     });
