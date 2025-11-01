@@ -4,16 +4,20 @@ import 'package:retrofit/retrofit.dart';
 part 'movie_remote_data_source.g.dart';
 
 abstract class MovieRemoteDataSource {
-  Future<List<MovieResponse>> getPopularMovies();
+  Future<MovieResponse> getMovies(
+    @Query('api_key') String apiKey,
+    @Query('page') int page,
+  );
 }
 
-
 @RestApi(baseUrl: 'https://api.themoviedb.org/3/movie')
-abstract class RestClient implements MovieRemoteDataSource {
-  factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
+abstract class MovieRemoteDataSourceImp implements MovieRemoteDataSource {
+  factory MovieRemoteDataSourceImp(Dio dio) = _MovieRemoteDataSourceImp;
 
   @override
   @GET('/popular')
-  Future<List<MovieResponse>> getPopularMovies();
+  Future<MovieResponse> getMovies(
+    @Query('api_key') String apiKey,
+    @Query('page') int page,
+  ) ;
 }
-

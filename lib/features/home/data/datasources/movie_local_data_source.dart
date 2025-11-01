@@ -16,7 +16,10 @@ class HiveMovieLocalDataSource implements MovieLocalDataSource {
       await _box.clear();
       await _box.addAll(movies);
     } catch (e) {
-      throw CacheException(e.toString());
+      throw CacheException(
+        message: e.toString(),
+        technicalMessage: e.toString(),
+      );
     }
   }
 
@@ -26,7 +29,10 @@ class HiveMovieLocalDataSource implements MovieLocalDataSource {
       if (_box.isEmpty) return [];
       return _box.values.toList();
     } catch (e) {
-      throw CacheException(e.toString());
+      throw CacheException(
+        message: e.toString(),
+        technicalMessage: e.toString(),
+      );
     }
   }
 }

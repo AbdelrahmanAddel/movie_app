@@ -10,7 +10,7 @@ MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) =>
     MovieResponse(
       page: (json['page'] as num).toInt(),
       results: (json['results'] as List<dynamic>)
-          .map((e) => Movie.fromJson(e as Map<String, dynamic>))
+          .map((e) => MovieModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       totalPages: (json['total_pages'] as num).toInt(),
       totalResults: (json['total_results'] as num).toInt(),
@@ -24,20 +24,39 @@ Map<String, dynamic> _$MovieResponseToJson(MovieResponse instance) =>
       'total_results': instance.totalResults,
     };
 
-Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      overview: json['overview'] as String,
+MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => MovieModel(
+      id: (json['id'] as num?)?.toInt(),
+      title: json['title'] as String?,
+      overview: json['overview'] as String?,
       posterPath: json['poster_path'] as String?,
       voteAverage: (json['vote_average'] as num).toDouble(),
-      releaseDate: json['release_date'] as String,
+      releaseDate: json['release_date'] as String?,
+      popularity: (json['popularity'] as num?)?.toDouble(),
+      originalLanguage: json['originalLanguage'] as String?,
+      originalTitle: json['originalTitle'] as String?,
+      video: json['video'] as bool?,
+      voteCount: (json['voteCount'] as num?)?.toInt(),
+      backdropPath: json['backdropPath'] as String?,
+      genreIds: (json['genreIds'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList(),
+      adult: json['adult'] as bool?,
     );
 
-Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
+Map<String, dynamic> _$MovieModelToJson(MovieModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'overview': instance.overview,
       'poster_path': instance.posterPath,
       'vote_average': instance.voteAverage,
       'release_date': instance.releaseDate,
+      'popularity': instance.popularity,
+      'originalLanguage': instance.originalLanguage,
+      'originalTitle': instance.originalTitle,
+      'video': instance.video,
+      'voteCount': instance.voteCount,
+      'backdropPath': instance.backdropPath,
+      'genreIds': instance.genreIds,
+      'adult': instance.adult,
     };

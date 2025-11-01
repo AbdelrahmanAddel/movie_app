@@ -5,7 +5,7 @@ part 'movie_model.g.dart';
 @JsonSerializable()
 class MovieResponse {
   final int page;
-  final List<Movie> results;
+  final List<MovieModel> results;
   @JsonKey(name: 'total_pages')
   final int totalPages;
   @JsonKey(name: 'total_results')
@@ -25,28 +25,44 @@ class MovieResponse {
 }
 
 @JsonSerializable()
-class Movie {
-  final int id;
-  final String title;
-  final String overview;
+class MovieModel {
+  final int? id;
+  final String? title;
+  final String? overview;
   @JsonKey(name: 'poster_path')
   final String? posterPath;
   @JsonKey(name: 'vote_average')
   final double voteAverage;
   @JsonKey(name: 'release_date')
-  final String releaseDate;
+  final String? releaseDate;
+  final double? popularity;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final bool? video;
+  final int? voteCount;
+  final String? backdropPath;
+  final List<int>? genreIds;
+  final bool? adult;
 
-  Movie({
+  factory MovieModel.fromJson(Map<String, dynamic> json) =>
+      _$MovieModelFromJson(json);
+
+  MovieModel({
     required this.id,
     required this.title,
     required this.overview,
-    this.posterPath,
+    required this.posterPath,
     required this.voteAverage,
     required this.releaseDate,
+    required this.popularity,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.video,
+    required this.voteCount,
+    required this.backdropPath,
+    required this.genreIds,
+    required this.adult,
   });
 
-  factory Movie.fromJson(Map<String, dynamic> json) =>
-      _$MovieFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MovieToJson(this);
+  Map<String, dynamic> toJson() => _$MovieModelToJson(this);
 }

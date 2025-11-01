@@ -8,8 +8,8 @@ part of 'movie_remote_data_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _RestClient implements RestClient {
-  _RestClient(
+class _MovieRemoteDataSourceImp implements MovieRemoteDataSourceImp {
+  _MovieRemoteDataSourceImp(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,12 +24,18 @@ class _RestClient implements RestClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<MovieResponse>> getPopularMovies() async {
+  Future<MovieResponse> getMovies(
+    String apiKey,
+    int page,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'page': page,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<MovieResponse>>(Options(
+    final _options = _setStreamType<MovieResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -45,12 +51,10 @@ class _RestClient implements RestClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<MovieResponse> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MovieResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => MovieResponse.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = MovieResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
